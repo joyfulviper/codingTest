@@ -14,7 +14,7 @@ public class Main {
 class Solution {
 
     public void solution() {
-        System.out.println(Math.pow(5, 20));
+
     }
 }
 
