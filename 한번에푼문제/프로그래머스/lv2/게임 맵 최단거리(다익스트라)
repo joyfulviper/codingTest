@@ -1,0 +1,47 @@
+import java.util.*;
+class Position {
+    int x, y, score;
+    public Position(int x, int y, int score) {
+        this.x = x;
+        this.y = y;
+        this.score = score;
+    }
+}
+class Solution {
+    public int solution(int[][] maps) {
+        int n = maps.length;
+        int m = maps[0].length;
+        int[][] d = new int[n][m];
+        int score = 0;        
+        for (int i = 0; i < n; i++) {
+            Arrays.fill(d[i], Integer.MAX_VALUE);
+        }
+        d[0][0] = 1;
+        //PriorityQueue<Position> pq = new PriorityQueue<>((o1, o2) -> Integer.compare(o1.score, o2.score));
+        Queue<Position> pq = new LinkedList<>();
+        pq.add(new Position(0, 0, 1));
+        int[] dx = {1, 0, -1, 0};
+        int[] dy = {0, 1, 0, -1};
+        
+        while (!pq.isEmpty()) {
+            Position now = pq.poll();
+            
+            if (now.score > d[now.x][now.y]) continue;
+            
+            for (int i = 0; i < 4; i++) {
+                int nx = now.x + dx[i];
+                int ny = now.y + dy[i];            
+                if (nx >= 0 && ny >= 0 && nx < n && ny < m && maps[nx][ny] != 0) {
+                    int cost = now.score + 1;                
+                    if (cost < d[nx][ny]) {                        
+                        d[nx][ny] = cost;
+                        pq.add(new Position(nx, ny, cost));
+                    }
+                }
+            }
+        }
+        if (d[n-1][m-1] == Integer.MAX_VALUE)
+            return -1;
+        return d[n-1][m-1];
+    }
+}
