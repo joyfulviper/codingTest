@@ -1,0 +1,86 @@
+import java.util.*;
+
+class Solution {
+    ArrayList<int[]> result = new ArrayList<>();
+    char[] c = {'A', 'C', 'F', 'J', 'M', 'N', 'R', 'T'};
+    int cnt = 0;
+    boolean[] visit = new boolean[8];
+    public int solution(int n, String[] data) {
+        int answer = 0;
+        comb(0, data, new char[8]);
+        answer = cnt;
+        return answer;
+    }
+    
+    void comb(int index, String[] data, char[] result) {
+        if (index == result.length) {
+            for (String dat : data) {
+                char left = dat.charAt(0);
+                char right = dat.charAt(2);
+                char reg = dat.charAt(3);
+                int value = dat.charAt(4) - '0';
+                value++;
+                int leftIndex = 0;
+                int rightIndex = 0;
+                if (reg == '=') {
+                    for (int i = 0; i < result.length; i++) {
+                        if (result[i] == left) {
+                            leftIndex = i;
+                        }
+                        
+                        if (result[i] == right) {
+                            rightIndex = i;
+                        }
+                    }
+                    if (Math.abs(rightIndex - leftIndex) == value) {
+                        continue;
+                    } else {
+                        return;
+                    }
+                } else if (reg == '>') {
+                    for (int i = 0; i < result.length; i++) {
+                        if (result[i] == left) {
+                            leftIndex = i;
+                        }
+                        
+                        if (result[i] == right) {
+                            rightIndex = i;
+                        }
+                    }
+                    if (Math.abs(rightIndex - leftIndex) > value) {
+                        continue;
+                    } else {
+                        return;
+                    }
+                } else {
+                    for (int i = 0; i < result.length; i++) {
+                        if (result[i]== left) {
+                            leftIndex = i;
+                        }
+                        
+                        if (result[i] == right) {
+                            rightIndex = i;
+                        }
+                    }
+                    if (Math.abs(rightIndex - leftIndex) < value) {
+                        continue;
+                    } else {
+                        return;
+                    }
+                }
+            }
+            cnt++;
+            return;
+        }
+        for (int i = 0; i < result.length; i++) {
+            if (!visit[i]) {
+                visit[i] = true;
+                result[index] = c[i];
+                comb(index + 1, data, result);
+                visit[i] = false;
+                
+            }
+            
+        }
+    }
+}
