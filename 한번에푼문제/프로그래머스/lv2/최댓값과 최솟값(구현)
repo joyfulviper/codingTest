@@ -1,0 +1,20 @@
+import java.util.*;
+
+class Solution {
+    public String solution(String s) {
+        String answer = "";
+        
+        String[] k = s.split(" ");
+        int[] t = new int[k.length];
+        int index = 0;
+        for (String d : k) {
+            t[index++] = Integer.valueOf(d);
+        }
+        Arrays.sort(t);
+        answer += String.valueOf(t[0]);
+        answer += " ";
+        answer += String.valueOf(t[t.length - 1]);
+        
+        return answer;
+    }
+}
