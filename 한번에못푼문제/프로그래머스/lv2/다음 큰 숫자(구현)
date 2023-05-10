@@ -1,0 +1,18 @@
+
+class Solution {
+    public int solution(int n) {
+        
+        int before = n;
+        n++;
+        while (true) {
+            int k = Integer.bitCount(before);
+            int t = Integer.bitCount(n);
+            if (k == t)
+                break;
+                
+            n++;
+        }
+
+        return n;
+    }
+}
