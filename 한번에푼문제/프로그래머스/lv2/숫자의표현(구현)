@@ -1,0 +1,20 @@
+class Solution {
+    public int solution(int n) {        
+        int count = 0;
+        for (int i = 0; i < n; i++) {
+            int k = 0;
+            for (int j = i + 1; j <= n; j++) {
+                k += j;
+                if (k > n) {
+                    break;
+                }
+                if (k == n) {
+                    count++;
+                    break;
+                }
+            }
+        }
+        
+        return count;
+    }
+}
