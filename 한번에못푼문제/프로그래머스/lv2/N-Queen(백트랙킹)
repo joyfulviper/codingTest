@@ -1,0 +1,33 @@
+import java.util.*;
+
+class Solution {
+    boolean[] visit;
+    int answer = 0;
+    public int solution(int n) {    
+        visit = new boolean[n];
+        perm(0, n, new int[n]);
+        return answer;
+    }
+    
+    void perm(int index, int n, int[] result) {
+        if (index == n) {            
+            answer++;
+            return;
+        }
+        for (int i = 0; i < n; i++) {            
+            result[index] = i;
+            if (possible(result, index)) {
+                perm(index + 1, n, result);
+            }            
+        }
+    }
+    
+        boolean possible(int[] result, int index) {
+        for (int i = 0; i < index; i++) {
+            if (Math.abs(i - index) == Math.abs(result[i] - result[index]) || result[i] == result[index]) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
