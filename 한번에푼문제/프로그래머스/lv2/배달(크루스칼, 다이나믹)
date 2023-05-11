@@ -1,0 +1,36 @@
+import java.util.*;
+
+class Solution {
+    public int solution(int N, int[][] road, int K) {
+        int[][] map = new int[N + 1][N + 1];
+        for (int i = 0; i <= N; i++)
+            Arrays.fill(map[i], Integer.MAX_VALUE);
+        for (int[] r : road) {
+            int a = r[0];
+            int b = r[1];
+            int c = r[2];
+            map[a][b] = Math.min(map[a][b], c);
+            map[b][a] = Math.min(map[b][a], c);
+        }
+        
+        for(int i = 1; i <= N; i++){
+            map[i][i] = 0;
+        }
+        
+        for (int k = 1; k <= N; k++) {
+            for (int a = 1; a <= N; a++) {
+                for (int b = 1; b <= N; b++) {
+                    if(map[a][k] != Integer.MAX_VALUE && map[k][b] != Integer.MAX_VALUE)
+                        map[a][b] = Math.min(map[a][b], map[a][k] + map[k][b]);
+                }
+            }
+        }
+        
+        int answer = 0;
+        for (int i = 1; i <= N; i++) {
+            if (map[1][i] <= K) answer++;
+        }
+        
+        return answer;
+    }
+}
