@@ -1,0 +1,21 @@
+class Solution {
+    public String solution(String s) {
+        String[] sr = s.split(" ");
+        String answer = "";
+        int index = 1;
+        for (String d : sr) {
+            if (d.length() == 0) {
+                if (index == sr.length) continue;
+                answer += " ";
+            } else {
+                d = d.substring(0, 1).toUpperCase() + d.substring(1).toLowerCase() + " ";
+                answer += d;
+            }            
+        }
+                
+        
+        if (s.charAt(s.length() - 1) != ' ') answer = answer.substring(0, answer.length() - 1);
+        
+        return answer;
+    }
+}
