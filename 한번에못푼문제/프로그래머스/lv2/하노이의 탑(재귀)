@@ -1,0 +1,27 @@
+import java.util.*;
+
+class Solution {
+    
+    ArrayList<int[]> list = new ArrayList<>();
+    
+    public int[][] solution(int n) {
+        hanoi(1, 2, 3, n);
+        int[][] answer = new int[list.size()][2];
+        int i = 0;
+        for (int[] result : list) {
+            answer[i++] = result.clone();
+        }
+        return answer;
+    }
+    
+    void hanoi(int s, int v, int e, int n) {
+        int[] result = {s, e};
+        if (n == 1) {
+            list.add(result);
+        } else {
+            hanoi(s, e, v, n - 1);
+            list.add(result);
+            hanoi(v, s, e, n - 1);
+        }
+    }
+}
