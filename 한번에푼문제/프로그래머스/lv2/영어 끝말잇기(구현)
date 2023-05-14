@@ -1,0 +1,21 @@
+import java.util.*;
+class Solution {
+    public int[] solution(int n, String[] words) {
+        Set<String> set = new HashSet<>();
+        int num = 0;
+        int order = 0;
+        
+        for (int i = 1; i < words.length; i++) {
+            String before = words[i - 1];
+            String now = words[i];
+            set.add(before);
+            if (set.contains(now) || before.charAt(before.length() - 1) != now.charAt(0)) {
+                num = i % n + 1;
+                order = i / n + 1;
+                break;
+            }
+        }
+        int[] answer = {num, order};
+        return answer;
+    }
+}
