@@ -1,0 +1,45 @@
+import java.util.*;
+class Solution {
+    public int solution(String str1, String str2) {
+        str1 = str1.toLowerCase();
+        str2 = str2.toLowerCase();
+        ArrayList<String> set1 = new ArrayList<>();
+        ArrayList<String> set2 = new ArrayList<>();
+        
+        for (int i = 0; i < str1.length() - 1; i++) {
+            char first = str1.charAt(i);
+            char second = str1.charAt(i + 1);
+            if (first >= 'a' && first <= 'z' && second >= 'a' && second <= 'z') {
+                set1.add(first + "" + second);
+            }
+        }
+        
+        for (int i = 0; i < str2.length() - 1; i++) {
+            char first = str2.charAt(i);
+            char second = str2.charAt(i + 1);
+            if (first >= 'a' && first <= 'z' && second >= 'a' && second <= 'z') {
+                set2.add(first + "" + second);
+            }
+        }
+        
+        ArrayList<String> union = new ArrayList<>();
+        ArrayList<String> interaction = new ArrayList<>();
+        
+        Collections.sort(set1);
+        Collections.sort(set2);
+        for (String s : set1) {
+            if (set2.remove(s)) {
+                interaction.add(s);
+            }
+            union.add(s);
+        }
+        
+        for (String s : set2) {
+            union.add(s);
+        }
+        if (union.size() == 0) return 65536;
+        double answer = (double) interaction.size() / (double)union.size();
+        
+        return (int) (answer * 65536);
+    }
+}
