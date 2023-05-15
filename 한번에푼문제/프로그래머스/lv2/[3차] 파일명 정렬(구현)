@@ -1,0 +1,47 @@
+import java.util.*;
+import java.util.regex.*;
+
+class File {
+    String head;
+    String number;
+    String tail;
+    public File(String head, String number, String tail) {
+        this.head = head;
+        this.number = number;
+        this.tail = tail;
+    }
+}
+
+class Solution {
+    public String[] solution(String[] files) {
+        List<File> ans = new ArrayList<>();
+
+        for (String file : files) {
+            Matcher m = Pattern.compile("([a-z\\-\\s]+)(\\d{1,5})(.*)", Pattern.CASE_INSENSITIVE).matcher(file);
+            if (m.matches()) {
+                String head = m.group(1);
+                String number = m.group(2);
+                String tail = m.group(3);
+                ans.add(new File(head, number, tail));
+            }
+        }
+
+        Collections.sort(ans, (o1, o2) -> {
+            int headCompare = o1.head.toLowerCase().compareTo(o2.head.toLowerCase());
+            if (headCompare == 0) {
+                return Integer.compare(Integer.parseInt(o1.number), Integer.parseInt(o2.number));
+            } else {
+                return headCompare;
+            }
+        });
+
+        String[] answer = new String[ans.size()];
+        int index = 0;
+        for (File f : ans) {
+            String s = f.head + f.number + f.tail;
+            answer[index++] = s;
+        }
+
+        return answer;
+    }
+}
