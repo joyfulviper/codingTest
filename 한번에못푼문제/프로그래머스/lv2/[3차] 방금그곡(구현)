@@ -1,0 +1,43 @@
+import java.util.*;
+
+class Solution {
+    public String solution(String m, String[] musicinfos) {
+        String answer = "(None)";
+        int time = 0;
+        m = convert(m);
+        for (String info : musicinfos) {
+            String[] s = info.split(",");
+            int start = (60 * Integer.valueOf(s[0].substring(0, 2)) + Integer.valueOf(s[0].substring(3)));
+            int end = (60 * Integer.valueOf(s[1].substring(0, 2)) + Integer.valueOf(s[1].substring(3)));
+            
+            int t = end - start;
+            
+            if (t > time) {
+                s[3] = convert(s[3]);
+                StringBuilder sb = new StringBuilder();
+                
+                for (int i = 0; i < t; i++) {
+                    sb.append(s[3].charAt(i % s[3].length()));
+                }
+                
+                if (sb.toString().indexOf(m) >= 0) {
+                    //System.out.println(sb.toString());
+                    answer = s[2];
+                    time = t;
+                }
+            }
+            
+        }
+        return answer;
+    }
+
+    // 두글자(음표#) 한글자로 치환
+    private String convert(String m) {
+        m = m.replaceAll("A#", "a");
+        m = m.replaceAll("C#", "c");
+        m = m.replaceAll("D#", "d");
+        m = m.replaceAll("F#", "f");
+        m = m.replaceAll("G#", "g");
+        return m;
+    }
+}
