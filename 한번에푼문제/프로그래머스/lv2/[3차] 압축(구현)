@@ -1,0 +1,34 @@
+import java.util.*;
+class Solution {
+    public int[] solution(String msg) {
+        ArrayList<String> dic = new ArrayList<>();
+        ArrayList<Integer> ans = new ArrayList<>();
+        char c = 'A';
+        for (int i = 0; i < 26; i++) {
+            dic.add(String.valueOf(c++));
+        }
+        
+        int index = 0;
+        
+        while (index < msg.length()) {
+            int i = 1;
+            while (index+i <= msg.length() && dic.contains(msg.substring(index, index+i))) {
+                i++;
+            }
+            
+            if(index+i <= msg.length()) {
+                dic.add(msg.substring(index, index+i));
+                ans.add(dic.indexOf(msg.substring(index, index+i-1)) + 1);
+            } else {
+                ans.add(dic.indexOf(msg.substring(index)) + 1);
+            }
+            index += i - 1;
+        }
+        
+        int[] answer = new int[ans.size()];
+        for (int i = 0; i < ans.size(); i++) {
+            answer[i] = ans.get(i);
+        }
+        return answer;
+    }
+}
