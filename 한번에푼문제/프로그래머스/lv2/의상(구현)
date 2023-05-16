@@ -1,0 +1,21 @@
+import java.util.*;
+class Solution {
+    public int solution(String[][] clothes) {
+        HashMap<String, ArrayList<String>> map = new HashMap<>();
+        for (String[] cloth : clothes) {
+            String kind = cloth[1];
+            String set = cloth[0];
+            if (map.get(kind) == null) {
+                map.put(kind, new ArrayList<>());
+            }
+            map.get(kind).add(set);
+        }
+        int answer = 1;
+        int i = 0;
+        for (ArrayList<String> t : map.values()) {            
+            answer *= t.size() + 1;            
+        }
+    
+        return answer - 1;
+    }
+}
