@@ -1,0 +1,32 @@
+import java.util.*;
+
+class Solution {
+    HashSet<Integer> set = new HashSet<>();
+    
+    public int solution(String numbers) {
+        perm("", numbers);
+        return set.size();
+    }
+    
+    void perm(String result, String numbers) {
+        if (!result.equals("")) {
+            int n = Integer.valueOf(result);
+            if (isPrime(n)) {
+                set.add(n);
+            }
+        }
+        for (int i = 0; i < numbers.length(); i++) {
+            perm(result + numbers.charAt(i), numbers.substring(0, i) + numbers.substring(i + 1));
+        }
+    }
+    
+    boolean isPrime(int n) {
+        if (n == 0 || n == 1) return false;
+        if (n == 2) return true;
+        if (n % 2 == 0) return false;
+        for (int i = 3; i * i <= n; i += 2) {
+            if (n % i == 0) return false;
+        }
+        return true;
+    }
+}
