@@ -1,0 +1,35 @@
+import java.util.*;
+class Solution {
+    public int solution(int[] citations) {
+        Arrays.sort(citations);
+        int n = citations.length;
+        int h = citations[citations.length - 1];        
+        
+        while (h > 0) {
+            int k = 0;
+            int h1 = 0;//h번 이상 인용된 논문
+            int h2 = 0;//h번 이하 인용된 논문
+            
+            for (int i = 0; i < citations.length; i++) {
+                if (citations[i] >= h) {
+                    k = i;
+                    break;
+                }
+            }
+            
+            h1 = n - k;
+            
+            for (int i = 0; i < k; i++) {
+                if (citations[i] <= h)
+                    h2++;
+            }
+            
+            if (h2 + h1 == n && h1 >= h) {                
+                return h;
+            }
+            
+            h--;
+        }
+        return 0;
+    }
+}
