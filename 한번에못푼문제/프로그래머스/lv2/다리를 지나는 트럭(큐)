@@ -1,0 +1,37 @@
+//문제에서 명시해주는 사항이 너무 적고, 유추해서 감으로 풀어야 해서 다시 풀어봐도 어려울듯..
+//트럭이 다리를 지나는데 걸리는 시간, 다리에 트럭이 추가되는데 걸리는 시간이 명시되어 있지 않음
+import java.util.*;
+
+class Solution {
+    public int solution(int bridge_length, int weight, int[] truck_weights) {
+        int time = 0;
+        int sum = 0;
+        Queue<Integer> q = new LinkedList<>();
+        
+        for (int truck : truck_weights) {
+            while (true) {
+                if (q.isEmpty()) {
+                    q.add(truck);
+                    sum += truck;
+                    time++;
+                    break;
+                } else {
+                    if (q.size() == bridge_length) {
+                        sum -= q.poll();                    
+                    } else {
+                        if (sum + truck > weight) {
+                            q.add(0);
+                            time++;
+                        } else {
+                            q.add(truck);
+                            time++;
+                            sum += truck;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return time + bridge_length;
+    }
+}
