@@ -1,0 +1,22 @@
+import java.util.*;
+class Solution {
+    public int solution(int[] people, int limit) {
+        Arrays.sort(people);
+        int f = 0;
+        int l = people.length - 1;
+        int sum = 0;
+        int answer = 0;
+        while (true) {
+            if (people[f] + people[l] <= limit) {
+                f++;
+                l--;
+            } else {
+                l--;
+            }
+            answer++;
+            if (f > l) break;
+        }
+        
+        return answer;
+    }
+}
