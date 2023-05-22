@@ -1,0 +1,26 @@
+class Solution {
+    public int solution(String skill, String[] skill_trees) {
+        
+        int answer = 0;
+        
+        for (String skill_tree : skill_trees) {
+            String s = "";
+            boolean check = true;
+            for (char c : skill_tree.toCharArray()) {
+                if (skill.indexOf(c) < 0) {
+                    continue;
+                } 
+                s += c + "";
+            }
+            for (int i = 0; i < s.length(); i++) {
+                if (s.charAt(i) != skill.charAt(i)) {
+                    check = false;
+                    break;
+                } 
+            }
+            
+            if (check) answer++;
+        }
+        return answer;
+    }
+}
