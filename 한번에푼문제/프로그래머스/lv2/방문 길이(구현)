@@ -1,0 +1,73 @@
+import java.util.*;
+class Path {
+    int x, y, afterX, afterY;
+
+    public Path(int x, int y, int afterX, int afterY) {
+        this.x = Math.max(x, afterX);
+        this.y = Math.max(y, afterY);
+        this.afterX = Math.min(x, afterX);
+        this.afterY = Math.min(y, afterY);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (!(o instanceof Path)) {
+            return false;
+        }
+        return this.x == ((Path) o).x && this.y == ((Path) o).y;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y, afterX, afterY);
+    }
+}
+
+class Position {
+    int x, y;
+    HashSet<Path> set = new HashSet<>();
+
+    public Position(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public void move(String dirs) {
+        int afterX = x;
+        int afterY = y;
+        for (int i = 0; i < dirs.length(); i++) {
+            if (dirs.charAt(i) == 'U') {
+                afterY++;
+            } else if (dirs.charAt(i) == 'D') {
+                afterY--;
+            } else if (dirs.charAt(i) == 'L') {
+                afterX--;
+            } else {
+                afterX++;
+            }
+            if (afterX >= -5 && afterX <= 5 && afterY >= -5 && afterY <= 5) {
+                Path p = new Path(x, y, afterX, afterY);
+                set.add(p);
+                this.x = afterX;
+                this.y = afterY;
+            }
+            afterX = x;
+            afterY = y;
+
+
+        }
+    }
+
+    public int getCount() {
+        return set.size();
+    }
+}
+class Solution {
+    public int solution(String dirs) {
+        Position p = new Position(0, 0);
+        p.move(dirs); 
+        return p.getCount();
+    }
+}
