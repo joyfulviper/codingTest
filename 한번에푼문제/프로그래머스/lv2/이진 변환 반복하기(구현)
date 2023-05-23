@@ -1,0 +1,24 @@
+class Solution {
+    public int[] solution(String s) {
+        int[] answer = new int[2];
+         int count = 0;
+        int whole = 0;
+        while(true) {
+            for (int i = 0; i < s.length(); i++) {
+                if (s.charAt(i) == '0') {
+                    s = s.replaceFirst("0", "");
+                    i--;
+                    count++;
+                }
+                
+            }
+            
+            s = Integer.toBinaryString(s.length());
+            whole++;
+            if(s.equals("1")) break;
+        }
+        answer[0] = whole;
+        answer[1] = count;
+        return answer;
+    }
+}
