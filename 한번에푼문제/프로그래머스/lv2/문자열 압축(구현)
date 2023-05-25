@@ -1,0 +1,46 @@
+class Solution {
+    public int solution(String s) {
+        int answer = Integer.MAX_VALUE;    
+        if (s.length() == 1) return 1;
+        for (int i = 1; i <= s.length() / 2; i++) {
+            String k = compress(s, i);
+            answer = Math.min(answer, k.length());
+            
+        }
+        return answer;
+    }
+    
+    String compress(String s, int n) {
+        
+        String result = "";
+        for (int i = 0; i <= s.length(); i+=n) {            
+            if(i + n > s.length()) {
+                result += s.substring(i);
+                return result;
+            }
+            String a = s.substring(i, i + n);            
+            int count = 1;
+            for (int j = i + n; j + n <= s.length(); j+=n) {            
+                String b = s.substring(j, j + n);
+                
+                if (a.equals(b)) {                    
+                    i += n;
+                    count++;
+                } else {                        
+                    break;
+                }
+            }
+            if (count < 2) {
+              result += a;  
+            }  else if (count == 2) {
+                result += "2" + a;
+            } else {
+                result += String.valueOf(count) + a;
+            }
+            
+
+        }
+        
+        return result;
+    } 
+}
