@@ -1,0 +1,61 @@
+import java.util.*;
+class Solution {
+    public String solution(String p) {
+        String answer = dfs(p);            
+
+        return answer;
+    }
+    
+    String dfs(String p) {
+        if (p.length() == 0) return p;
+        String u = "";
+        String v = "";
+        int count = 0;
+        for (int i = 0; i < p.length(); i++) {
+            if (p.charAt(i) == '(') {                
+                count++;
+            } else {                
+                count--;
+            }
+            if (count == 0) {
+                u = p.substring(0, i + 1);
+                v = p.substring(i + 1);
+                break;
+            }
+        }
+        if (isCorrect(u)) {
+            return u + dfs(v);  
+        } else {
+            String s = "(";
+            s += dfs(v);
+            s += ")";
+            u = u.substring(1, u.length() - 1);
+            String result = "";
+            for (char c : u.toCharArray()) {
+                if (c == '(') {
+                    result += ")";
+                } else {
+                    result += "(";
+                }
+            }
+            s += result;
+            return s;
+        }
+    }
+    
+    boolean isCorrect(String s) {
+        Stack<Character> stack = new Stack<>();
+        for (char c : s.toCharArray()) {
+            if (c == '(') {
+                stack.push(c);
+            } else {
+                if (stack.isEmpty()) {
+                    return false;
+                } else {
+                    stack.pop();
+                }
+            }
+        }
+        return stack.isEmpty();
+    }
+}
