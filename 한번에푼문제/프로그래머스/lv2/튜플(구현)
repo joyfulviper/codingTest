@@ -1,0 +1,23 @@
+import java.util.*;
+class Solution {
+    public List<Integer> solution(String s) {
+        s = s.substring(2, s.length() - 2);        
+        s = s.replace("},{", "-");
+        String[] split = s.split("-");
+        Arrays.sort(split, (o1, o2) -> Integer.compare(o1.length(), o2.length()));
+        List<Integer> answer = new ArrayList<>();
+        
+        for (String str : split) {
+            String[] sp = str.split(",");
+            for (String str2 : sp) {
+                if (!answer.contains(Integer.valueOf(str2))) {
+                    answer.add(Integer.valueOf(str2));
+                }
+            }
+        }
+        
+        
+        
+        return answer;
+    }
+}
