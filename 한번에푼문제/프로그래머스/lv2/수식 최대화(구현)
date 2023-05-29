@@ -1,0 +1,89 @@
+import java.util.*;
+class Solution {
+
+    char[] operation = {'+', '-', '*'};
+    
+    List<char[]> operations = new ArrayList<>();
+    boolean[] visit = new boolean[3];
+    
+    long answer = 0;
+    
+    public long solution(String expression) {
+        make(0, new char[3]);
+        for (int i = 0; i < 6; i++) {
+            calculate(expression, i);
+        }
+        return answer;
+    }
+
+    void make(int depth, char[] result) {
+        if (depth == 3) {
+            operations.add(result.clone());
+            return;
+        }
+        for (int i = 0; i < 3; i++) {
+            if (!visit[i]) {
+                visit[i] = true;
+                result[depth] = operation[i];
+                make(depth + 1, result);
+                visit[i] = false;
+            }
+        }   
+    }
+    void calculate(String expression, int k) {
+        char[] op = operations.get(k);
+        List<Long> numList = new ArrayList<>();
+        List<Character> opList = new ArrayList<>();
+        
+        String str = "";
+        for (int i = 0; i < expression.length(); i++) {
+            if (expression.charAt(i) >= '0' && expression.charAt(i) <= '9') {
+                str += expression.charAt(i) + "";
+            } else {
+                numList.add(Long.valueOf(str));
+                opList.add(expression.charAt(i));
+                str = "";
+            }
+        }
+        numList.add(Long.valueOf(str));
+        
+        for (int i = 0; i < opList.size(); i++) {
+            if (opList.get(i) == op[0]) {
+                long re = cal(numList.remove(i), numList.remove(i), op[0]);
+                numList.add(i, re);
+                opList.remove(i);
+                i--;
+            }
+        }
+        
+        for (int i = 0; i < opList.size(); i++) {
+            if (opList.get(i) == op[1]) {
+                long re = cal(numList.remove(i), numList.remove(i), op[1]);
+                numList.add(i, re);
+                opList.remove(i); 
+                i--;
+            }
+        }
+        
+        for (int i = 0; i < opList.size(); i++) {
+            if (opList.get(i) == op[2]) {
+                long re = cal(numList.remove(i), numList.remove(i), op[2]);
+                numList.add(i, re);
+                opList.remove(i); 
+                i--;
+            }
+        }
+        
+        answer = Math.max(answer, Math.abs(numList.get(0)));
+    }
+    
+    long cal(Long num1, Long num2, char operand) {
+        if (operand == '+')
+            return num1 + num2;
+        else if (operand == '-')
+            return num1 - num2;
+        else
+            return num1 * num2;
+    }
+    
+}
