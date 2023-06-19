@@ -1,0 +1,64 @@
+package com.company;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+        // write your code here
+        Solution s = new Solution();
+        s.solution();
+    }
+}
+
+class Solution {
+
+    int n;
+    int r;
+    char[] c;
+    ArrayList<String> result = new ArrayList<>();
+    public void solution() throws IOException {
+        Scanner sc = new Scanner(System.in);
+        r = sc.nextInt();
+        n = sc.nextInt();
+        c = new char[n];
+        for (int i = 0; i < n; i++) {
+            c[i] = sc.next().charAt(0);
+        }
+
+        Arrays.sort(c);
+        comb(0, "");
+        for (String s: result) {
+            System.out.println(s);
+        }
+    }
+
+    void comb(int start, String end) {
+        if (end.length() == r) {
+            int vC = 0;
+            int cC = 0;
+            for (char q : end.toCharArray()) {
+                if (isVowel(q)) {
+                    vC++;
+                } else {
+                    cC++;
+                }
+            }
+            if (vC >= 1 && cC >= 2) {
+                result.add(end);
+            }
+            return;
+        }
+
+        for (int i = start; i < n; i++) {
+            comb(i + 1, end + c[i]);
+        }
+    }
+
+    boolean isVowel(char c) {
+        return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u';
+    }
+}
