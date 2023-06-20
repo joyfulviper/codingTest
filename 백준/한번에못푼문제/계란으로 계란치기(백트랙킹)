@@ -49,6 +49,7 @@ class Solution {
                 boolean isBroken = false;
                 for (int i = 0; i < n; i++) {
                     if (i == index || egg[i][0] <= 0) continue;
+                    isBroken = true;
                     //내구도 -= 무게
                     egg[i][0] -= egg[index][1];
                     egg[index][0] -= egg[i][1];
